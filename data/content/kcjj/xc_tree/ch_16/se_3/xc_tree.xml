@@ -1,0 +1,10 @@
+﻿<xc_know>
+
+	<xc_know_list>
+		<xc_know_column id="xc_know_01" Name="一、行政赔偿的行政处理程序">../content/kcjj/word/16/ch_03/se_01/16-3-1-1.htm</xc_know_column>
+		<xc_know_column id="xc_know_02" Name="二、行政赔偿的诉讼程序">../content/kcjj/word/16/ch_03/se_02/16-3-2-1.htm</xc_know_column>
+                <xc_know_column id="xc_know_03" Name="三、行政赔偿中的追偿程序">../content/kcjj/word/16/ch_03/se_03/16-3-3-1.htm</xc_know_column>
+                
+	</xc_know_list>
+
+</xc_know>

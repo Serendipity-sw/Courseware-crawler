@@ -1,0 +1,12 @@
+﻿<xc_know>
+
+	<xc_know_list>
+		<xc_know_column id="xc_know_01" Name="一、证据提供规则">../content/kcjj/word/13/ch_03/se_01/13-3-1-1.htm</xc_know_column>
+		<xc_know_column id="xc_know_02" Name="二、证据调取规则">../content/kcjj/word/13/ch_03/se_02/13-3-2-1.htm</xc_know_column>
+                <xc_know_column id="xc_know_03" Name="三、证据保全规则">../content/kcjj/word/13/ch_03/se_03/13-3-3-1.htm</xc_know_column>
+                <xc_know_column id="xc_know_04" Name="四、质证规则">../content/kcjj/word/13/ch_03/se_04/13-3-4-1.htm</xc_know_column>
+                <xc_know_column id="xc_know_05" Name="五、认证规则">../content/kcjj/word/13/ch_03/se_05/13-3-5-1.htm</xc_know_column>
+		
+	</xc_know_list>
+
+</xc_know>

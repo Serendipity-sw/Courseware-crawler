@@ -1,0 +1,10 @@
+﻿<xc_know>
+
+	<xc_know_list>
+		<xc_know_column id="xc_know_01" Name="一、层级监督">../content/kcjj/word/8/ch_03/se_01/8-3-1-1.htm</xc_know_column>
+		<xc_know_column id="xc_know_02" Name="二、行政监察">../content/kcjj/word/8/ch_03/se_02/8-3-2-1.htm</xc_know_column>
+                <xc_know_column id="xc_know_03" Name="三、行政审计监督">../content/kcjj/word/8/ch_03/se_03/8-3-3-1.htm</xc_know_column>
+                
+	</xc_know_list>
+
+</xc_know>

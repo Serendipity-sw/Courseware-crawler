@@ -1,0 +1,10 @@
+﻿<xc_know>
+
+	<xc_know_list>
+		<xc_know_column id="xc_know_01" Name="一、一般地域管辖">../content/kcjj/word/11/ch_03/se_01/11-3-1-1.htm</xc_know_column>
+		<xc_know_column id="xc_know_02" Name="二、特殊地域管辖">../content/kcjj/word/11/ch_03/se_02/11-3-2-1.htm</xc_know_column>
+                <xc_know_column id="xc_know_03" Name="三、共同管辖">../content/kcjj/word/11/ch_03/se_03/11-3-3-1.htm</xc_know_column>
+                
+	</xc_know_list>
+
+</xc_know>

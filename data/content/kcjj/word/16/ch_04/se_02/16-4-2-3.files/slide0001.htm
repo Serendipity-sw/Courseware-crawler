@@ -1,0 +1,438 @@
+<html xmlns:v="urn:schemas-microsoft-com:vml"
+xmlns:o="urn:schemas-microsoft-com:office:office"
+xmlns:p="urn:schemas-microsoft-com:office:powerpoint"
+xmlns:oa="urn:schemas-microsoft-com:office:activation"
+xmlns="http://www.w3.org/TR/REC-html40">
+
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=gb2312">
+<meta name=ProgId content=PowerPoint.Slide>
+<meta name=Generator content="Microsoft PowerPoint 11">
+<link id=Main-File rel=Main-File href="../16-4-2-3.htm">
+<link rel=Preview href=preview.wmf>
+<!--[if !mso]>
+<style>
+v\:* {behavior:url(#default#VML);}
+o\:* {behavior:url(#default#VML);}
+p\:* {behavior:url(#default#VML);}
+.shape {behavior:url(#default#VML);}
+v\:textbox {display:none;}
+</style>
+<![endif]-->
+<title>PowerPoint 演示文稿</title>
+<meta name=Description content=2004-9-21>
+<link rel=Stylesheet href="master03_stylesheet.css">
+<!--[if gte IE 5]>
+<object id=MSOANIM classid="CLSID:A4639D2F-774E-11D3-A490-00C04F6843FB"></object>
+<object id=MSOTIME classid="CLSID:A4639D29-774E-11D3-A490-00C04F6843FB"></object>
+<![endif]-->
+<![if !ppt]>
+<style>
+.CB
+	{color:black;}
+</style>
+<style media=print>
+<!--.sld
+	{left:0px !important;
+	width:6.0in !important;
+	height:4.98in !important;
+	font-size:103% !important;}
+-->
+</style>
+<style>
+<!--
+oa\:* { BEHAVIOR: url(#MSOANIM#ANIM) url(#MSOTIME#TIME) }
+oa\:par,oa\:seq,oa\:iterate { BEHAVIOR:url(#MSOTIME) }
+oa\:video,oa\:audio {BEHAVIOR:url(#MSOTIME) url(#MSOTIME#MEDIA) }
+-->
+</style>
+<script><!--
+function LoadSld()
+{
+	var sld=GetObj("SlideObj")
+	if( !g_supportsPPTHTML ) {		
+		sld.style.visibility="visible"
+		return
+	}
+
+	if( MakeNotesVis() ) return
+
+	runAnimations = _InitAnimations();
+	
+	if( IsWin("PPTSld") )
+		parent.SldUpdated(GetSldId())
+	g_origSz=parseInt(SlideObj.style.fontSize)
+	g_origH=sld.style.posHeight
+	g_origW=sld.style.posWidth
+	g_scaleHyperlinks=(document.all.tags("AREA").length>0)
+	if( g_scaleHyperlinks )
+		InitHLinkArray()
+	if( g_scaleInFrame||(IsWin("PPTSld") && parent.IsFullScrMode() ) )
+		document.body.scroll="no"
+	_RSW()
+	if( IsWin("PPTSld") && parent.IsFullScrMode() )
+		FullScrInit();
+	
+	MakeSldVis();
+	
+	if( runAnimations )
+	{
+		if( document.all("NSPlay") )
+			document.all("NSPlay").autoStart = false;
+
+		if( sld.filters && sld.filters.revealtrans )
+			setTimeout( "document.body.start()", sld.filters.revealtrans.duration * 1000 );
+		else
+			document.body.start();
+	}
+}
+
+function MakeSldVis() 
+{
+	var fTrans=g_showAnimation && SldHasTrans()
+	if( fTrans )	
+	{
+		if( g_bgSound ) {
+			idx=g_bgSound.indexOf(",");
+			pptSound.src=g_bgSound.substr( 0, idx );
+			pptSound.loop= -(parseInt(g_bgSound.substr(idx+1)));
+		}
+		SlideObj.filters.revealtrans.Apply()	
+    }
+	SlideObj.style.visibility="visible"
+	if( fTrans )
+		SlideObj.filters.revealtrans.Play()
+}
+function MakeNotesVis() 
+{
+	if( !IsNts() ) return false 
+	SlideObj.style.display="none"
+	nObj = document.all.item("NotesObj")
+	parent.SetHasNts(0)
+	if( nObj ) { 
+		nObj.style.display=""
+		parent.SetHasNts(1)
+	}
+	return 1
+}
+function ChkAutoAdv()
+{
+	if(SldHasTrans())
+		SlideObj.onfilterchange=AutoAdv
+	else
+		AutoAdv()
+}
+function AutoAdv()
+{
+	if(!IsWin("PPTSld") || !gUseSldTimings )return
+	var sld=GetCurSld()
+	if( (sld.mAdvDelay>0) && !parent.IsFramesMode() )
+		setTimeout("parent.GoToNextSld()",sld.mAdvDelay)
+}
+function GetObj(id)
+{
+	if(g_supportsPPTHTML) return document.all(id);
+	else return document.getElementById(id);
+}
+function SldHasTrans() { return SlideObj.style.filter != ""; }
+function GetSldId() { return sId=location.href.substring(location.href.lastIndexOf('/')+1) }
+function HideMenu() { if( frames["PPTSld"] && PPTSld.document.all.item("ctxtmenu") && PPTSld.ctxtmenu.style.display!="none" ) { PPTSld.ctxtmenu.style.display='none'; return true } return false }
+function IsWin( name ) { return window.name == name }
+function IsNts() { return IsWin("PPTNts") }
+function IsSldOrNts() { return( IsWin("PPTSld")||IsWin("PPTNts") ) }
+function SupportsPPTAnimation() { return( navigator.platform == "Win32" && navigator.appVersion.indexOf("Windows")>0 ) }
+function SupportsPPTHTML()
+{
+	var appVer=navigator.appVersion, msie=appVer.indexOf("MSIE "), ver=0
+	if( msie >= 0 )
+		ver=parseFloat( appVer.substring( msie+5, appVer.indexOf(";",msie) ) )
+	else
+		ver=parseInt(appVer)
+
+	return( ver >= 4 && msie >= 0 )
+}
+function _RSW()
+{
+	if( !g_supportsPPTHTML || IsNts() ||
+	  ( !g_scaleInFrame && (!IsWin("PPTSld") || !parent.IsFullScrMode()) ) )
+		return
+
+        var padding=0;
+        if( IsWin("PPTSld") && parent.IsFramesMode() ) padding=6
+
+	cltWidth=document.body.clientWidth-padding
+	cltHeight=document.body.clientHeight-padding
+	factor=(1.0*cltWidth)/g_origW
+	if( cltHeight < g_origH*factor )
+		factor=(1.0*cltHeight)/g_origH
+
+	newSize = g_origSz * factor
+	if( newSize < 1 ) newSize=1
+
+	s=SlideObj.style
+	s.fontSize=newSize+"px"
+	s.posWidth=g_origW*factor
+	s.posHeight=g_origH*factor
+	s.posLeft=(cltWidth-s.posWidth+padding)/2
+	s.posTop=(cltHeight-s.posHeight+padding)/2
+
+	if( g_scaleHyperlinks )
+		ScaleHyperlinks( factor )
+}
+function _InitAnimations()
+{
+	animRuntimeInstalled = ''+document.body.localTime != 'undefined';
+	isFullScreen = (window.name == "PPTSld") && !parent.IsFramesMode();
+	g_animUseRuntime = g_showAnimation && animRuntimeInstalled && !(isFullScreen && parent.IsSldVisited());
+	if( g_animUseRuntime ) {
+		collSeq = document.all.tags("seq");
+		if( collSeq != null ) {
+			for(ii=0;ii<collSeq.length;ii++) {
+				if( collSeq[ii].getAttribute( "p:nodeType" ) == "mainSeq" ) {
+					g_animMainSequence = collSeq[ii];
+					break;
+				}
+			}
+		}
+	
+		if( g_animItemsToHide && document.body.playAnimations != false ) {
+			for(jj = 0; jj < g_animItemsToHide.length; jj++) {
+				if( hideObj = GetObj(g_animItemsToHide[jj]) )
+					hideObj.runtimeStyle.visibility="hidden";
+			}
+		}
+
+		if( g_animInteractiveItems ){
+			for(jj = 0; jj < g_animInteractiveItems.length; jj++) {
+				if( triggerObj = GetObj(g_animInteractiveItems[jj]) )
+					triggerObj.runtimeStyle.cursor="hand";
+			}
+		}
+		
+		if( gUseSldTimings && ''+g_animSlideTime != 'undefined' ) {
+			adjustedTime = document.body.calculateAutoAdvanceTimes( g_animSlideTime, g_animEffectTimings );
+			if( IsWin("PPTSld") && adjustedTime != g_animSlideTime ) {
+			   var sld = GetCurSld();
+			   sld.mAdvDelay = adjustedTime * 1000;
+			}
+		}
+	}
+
+	return g_animUseRuntime;
+}
+
+
+var g_supportsPPTHTML = SupportsPPTHTML(), g_scaleInFrame = 1, gId="", g_bgSound="",
+    g_scaleHyperlinks = false, g_allowAdvOnClick = 1, g_showInBrowser = 1, gLoopCont = 0, gUseSldTimings = 1;
+var g_showAnimation = g_supportsPPTHTML && SupportsPPTAnimation() && g_showInBrowser;
+var g_animManager = null;
+var g_animUseRuntime = false;
+var g_animItemsToHide, g_animInteractiveItems, g_animSlideTime;
+var g_animMainSequence = null;
+
+//--></script><script><!--
+g_animItemsToHide=new Array("_x0000_s2051_251_260","_x0000_s2051_175_248","_x0000_s2051_82_174","_x0000_s2051_37_81","_x0000_s2051_0_36");
+
+//--></script><!--[if vml]><script>g_vml = 1;
+</script><![endif]--><![endif]><o:shapelayout v:ext="edit">
+ <o:idmap v:ext="edit" data="2"/>
+</o:shapelayout>
+</head>
+
+<body lang=ZH-CN style='margin:0px;background-color:white' onresize="_RSW()"
+onload="LoadSld();top.xc_word_onload(321,self.location.href);top.xc_current_location('课程讲解<<第十六章<<第四节')" onunload="top.xc_word_unonload();" oa:clockstart="onstart">
+
+<div id=SlideObj class=sld style='position:absolute;top:0px;left:0px;
+width:554px;height:460px;font-size:16px;background-color:white;clip:rect(0%, 101%, 101%, 0%);
+visibility:hidden'><p:slide coordsize="1757,1460"
+ colors="#ffffff,#000000,#808080,#000000,#bbe0e3,#333399,#009999,#99cc00"
+ masterhref="master03.xml">
+ <v:background id="_x0000_s2049" o:bwmode="white" o:targetscreensize="800,600">
+  <v:fill src="slide0001_image001.jpg" o:title="diwen1" color2="#339 [5]"
+   recolor="t" type="frame"/>
+ </v:background><![if !vml]><img src="slide0001_background.jpg"
+ v:shapes="_x0000_s2049" style='position:absolute;top:0%;left:0%;width:100.0%;
+ height:100.0%'><![endif]><![if !ppt]><p:shaperange
+  href="master03.xml#_x0000_s1028"/><p:shaperange
+  href="master03.xml#_x0000_s1029"/><![endif]><p:shaperange
+  href="master03.xml#_x0000_m1027"/><v:shape id="_x0000_s2051" type="#_x0000_m1027"
+  style='position:absolute;left:130.5pt;top:225.375pt;width:1485.5pt;height:997.875pt'>
+  <v:fill o:detectmouseclick="f"/>
+  <v:stroke o:forcedash="f"/>
+  <o:lock v:ext="edit" text="f"/>
+  <p:placeholder type="subTitle" position="1"/><p:animation number="2" delay="0"
+   type="object" effect="fly" direction="left" flag="17412"/></v:shape>
+ <div v:shape="_x0000_s2051" class=CB style='position:absolute;top:17.6%;
+ left:8.48%;width:98.55%;height:64.78%;tab-interval:2.5538in'>
+ <div id="_x0000_s2051_0_36" style='text-align:left;mso-line-spacing:"140 0 0";
+ position:absolute;top:0%;left:0%;width:87.54%;height:4.02%;white-space:nowrap'><span
+ lang=ZH-CN style='font-family:宋体;mso-ascii-font-family:宋体;mso-fareast-font-family:
+ 宋体;mso-hansi-font-family:宋体;font-size:44%;mso-ansi-language:EN-US'>　　３、侵犯公民、法人和其他组织的财产权造成损害的，按照下列规定处理：&#13;</span></div>
+ <div style='text-align:left;mso-line-spacing:"140 0 0";position:absolute;
+ top:6.37%;left:0%;width:83.88%;height:4.02%'><span lang=ZH-CN
+ style='font-family:宋体;mso-ascii-font-family:宋体;mso-fareast-font-family:宋体;
+ mso-hansi-font-family:宋体;font-size:44%;mso-ansi-language:EN-US;display:none'>&#13;</span></div>
+ <div id="_x0000_s2051_37_81" style='text-align:left;mso-line-spacing:"140 0 0";
+ position:absolute;top:12.75%;left:0%;width:100.0%;height:10.4%;white-space:
+ nowrap'><span style='position:absolute;top:0%;left:0%;width:100.0%;height:
+ 38.7%'><span lang=ZH-CN style='font-family:宋体;mso-ascii-font-family:宋体;
+ mso-fareast-font-family:宋体;mso-hansi-font-family:宋体;font-size:44%;mso-ansi-language:
+ EN-US'>　　(１)处罚款、罚金、追缴、没收财产或者违反国家规定征收财物、摊派费用的，返还财</span></span><span
+ style='position:absolute;top:61.29%;left:0%;width:83.88%;height:38.7%'><span
+ lang=ZH-CN style='font-family:宋体;mso-ascii-font-family:宋体;mso-fareast-font-family:
+ 宋体;mso-hansi-font-family:宋体;font-size:44%;mso-ansi-language:EN-US'>产。&#13;</span></span></div>
+ <div style='text-align:left;mso-line-spacing:"140 0 0";position:absolute;
+ top:25.5%;left:0%;width:83.88%;height:4.02%'><span lang=ZH-CN
+ style='font-family:宋体;mso-ascii-font-family:宋体;mso-fareast-font-family:宋体;
+ mso-hansi-font-family:宋体;font-size:44%;mso-ansi-language:EN-US;display:none'>&#13;</span></div>
+ <div id="_x0000_s2051_82_174" style='text-align:left;mso-line-spacing:"140 0 0";
+ position:absolute;top:31.87%;left:0%;width:100.0%;height:16.77%;white-space:
+ nowrap'><span style='position:absolute;top:0%;left:0%;width:100.0%;height:
+ 24.0%'><span lang=ZH-CN style='font-family:宋体;mso-ascii-font-family:宋体;
+ mso-fareast-font-family:宋体;mso-hansi-font-family:宋体;font-size:44%;mso-ansi-language:
+ EN-US'>　　(２)查封、扣押、冻结财产的，如未造成财产的损坏或灭失的，解除对财产的查封、扣</span></span><span
+ style='position:absolute;top:38.0%;left:0%;width:100.0%;height:24.0%'><span
+ lang=ZH-CN style='font-family:宋体;mso-ascii-font-family:宋体;mso-fareast-font-family:
+ 宋体;mso-hansi-font-family:宋体;font-size:44%;mso-ansi-language:EN-US'>押、冻结。根据国家赔偿法的规定，在此情况下国家不赔偿因采取查封、扣押、冻结而对当</span></span><span
+ style='position:absolute;top:76.0%;left:0%;width:83.88%;height:24.0%'><span
+ lang=ZH-CN style='font-family:宋体;mso-ascii-font-family:宋体;mso-fareast-font-family:
+ 宋体;mso-hansi-font-family:宋体;font-size:44%;mso-ansi-language:EN-US'>事人可能造成的损害。&#13;</span></span></div>
+ <div style='text-align:left;mso-line-spacing:"140 0 0";position:absolute;
+ top:51.0%;left:0%;width:83.88%;height:4.02%'><span lang=ZH-CN
+ style='font-family:宋体;mso-ascii-font-family:宋体;mso-fareast-font-family:宋体;
+ mso-hansi-font-family:宋体;font-size:44%;mso-ansi-language:EN-US;display:none'>&#13;</span></div>
+ <div id="_x0000_s2051_175_248" style='text-align:left;mso-line-spacing:"140 0 0";
+ position:absolute;top:57.38%;left:0%;width:100.0%;height:10.4%;white-space:
+ nowrap'><span style='position:absolute;top:0%;left:0%;width:100.0%;height:
+ 38.7%'><span lang=ZH-CN style='font-family:宋体;mso-ascii-font-family:宋体;
+ mso-fareast-font-family:宋体;mso-hansi-font-family:宋体;font-size:44%;mso-ansi-language:
+ EN-US'>　　(３)查封、扣押、冻结财产造成财产损坏的，能够恢复原状的恢复原状，不能恢复原状</span></span><span
+ style='position:absolute;top:61.29%;left:0%;width:83.88%;height:38.7%'><span
+ lang=ZH-CN style='font-family:宋体;mso-ascii-font-family:宋体;mso-fareast-font-family:
+ 宋体;mso-hansi-font-family:宋体;font-size:44%;mso-ansi-language:EN-US'>的按损害程度给付相应的赔偿金；财产遭灭失的，给付相应的赔偿金。&#13;</span></span></div>
+ <div style='mso-line-spacing:"140 0 0";position:absolute;top:70.13%;
+ left:0%;width:83.88%;height:4.02%'><span lang=ZH-CN style='font-family:宋体;
+ mso-ascii-font-family:宋体;mso-fareast-font-family:宋体;mso-hansi-font-family:
+ 宋体;font-size:44%;mso-ansi-language:EN-US;display:none'>&#13;</span></div>
+ <div style='mso-line-spacing:"140 0 0";position:absolute;top:76.51%;
+ left:0%;width:83.88%;height:4.02%'><span lang=ZH-CN style='font-family:宋体;
+ mso-ascii-font-family:宋体;mso-fareast-font-family:宋体;mso-hansi-font-family:
+ 宋体;font-size:44%;mso-ansi-language:EN-US;display:none'>&#13;</span></div>
+ <div style='mso-line-spacing:"140 0 0";position:absolute;top:82.88%;
+ left:0%;width:83.88%;height:4.02%'><span lang=ZH-CN style='font-family:宋体;
+ mso-ascii-font-family:宋体;mso-fareast-font-family:宋体;mso-hansi-font-family:
+ 宋体;font-size:44%;mso-ansi-language:EN-US;display:none'>&#13;</span></div>
+ <div id="_x0000_s2051_251_260" style='mso-line-spacing:"140 0 0";position:
+ absolute;top:89.26%;left:0%;width:83.88%;height:4.02%;white-space:nowrap'><span
+ lang=ZH-CN style='font-family:宋体;mso-ascii-font-family:宋体;mso-fareast-font-family:
+ 宋体;mso-hansi-font-family:宋体;font-size:44%;mso-ansi-language:EN-US'><p:onmouseclick
+  hyperlinktype="otherFile" href="../16-4-2-2.htm"/><a href="../16-4-2-2.htm"
+ target="_self" onclick="window.event.cancelBubble=true;">上一页</a></span><span
+ lang=ZH-CN style='font-family:宋体;mso-ascii-font-family:宋体;mso-fareast-font-family:
+ 宋体;mso-hansi-font-family:宋体;font-size:44%;mso-ansi-language:EN-US'>　　</span><span
+ lang=ZH-CN style='font-family:宋体;mso-ascii-font-family:宋体;mso-fareast-font-family:
+ 宋体;mso-hansi-font-family:宋体;font-size:44%;mso-ansi-language:EN-US'><p:onmouseclick
+  hyperlinktype="otherFile" href="../16-4-2-4.htm"/><a href="../16-4-2-4.htm"
+ target="_self" onclick="window.event.cancelBubble=true;">下一页</a></span><span
+ lang=ZH-CN style='font-family:宋体;mso-ascii-font-family:宋体;mso-fareast-font-family:
+ 宋体;mso-hansi-font-family:宋体;font-size:44%;mso-ansi-language:EN-US;display:
+ none'>&#13;</span></div>
+ <div style='text-align:right;mso-line-spacing:"140 0 0";position:absolute;
+ top:95.63%;left:0%;width:83.88%;height:4.02%'><span lang=ZH-CN
+ style='font-family:宋体;mso-ascii-font-family:宋体;mso-fareast-font-family:宋体;
+ mso-hansi-font-family:宋体;font-size:44%;mso-ansi-language:EN-US'>第３页　共４页</span></div>
+ </div>
+</p:slide></div>
+
+<p:animation number="867345256"/><oa:par id="TimeNode0" dur="indefinite"
+ restart="never" p:nodeType="timingRoot">
+ <oa:seq id="TimeNode1" dur="indefinite" prev="document.onpptprev"
+  next="document.onpptnext" concurrent="enabled" nextAction="seek"
+  p:nodeType="mainSeq">
+  <oa:par id="TimeNode2" begin="indefinite;TimeNode1.onbegin" fill="hold">
+   <oa:par id="TimeNode3" begin="0.0" fill="hold">
+    <oa:par id="TimeNode4" o:presetID="ppt_2" o:presetClass="entrance"
+     o:presetSubType="0x8" begin="0.0" fill="hold" p:nodeType="afterEffect">
+     <oa:set id="TimeNode5" begin="0.0" dur="0.001" fill="hold"
+      targetElement="_x0000_s2051_0_36" attributeName="style.visibility"
+      to="visible"/>
+     <oa:animate id="TimeNode6" dur="1.0" fill="hold"
+      targetElement="_x0000_s2051_0_36" additive="base" attributeName="ppt_x"
+      calcmode="linear" valueType="number" keyTimes="0.0;1.0"
+      values="0-#ppt_w/2;#ppt_x"/>
+     <oa:animate id="TimeNode7" dur="1.0" fill="hold"
+      targetElement="_x0000_s2051_0_36" additive="base" attributeName="ppt_y"
+      calcmode="linear" valueType="number" keyTimes="0.0;1.0"
+      values="#ppt_y;#ppt_y"/>
+    </oa:par>
+   </oa:par>
+   <oa:par id="TimeNode8" begin="1.0" fill="hold">
+    <oa:par id="TimeNode9" o:presetID="ppt_2" o:presetClass="entrance"
+     o:presetSubType="0x8" begin="0.0" fill="hold" p:nodeType="afterEffect">
+     <oa:set id="TimeNode10" begin="0.0" dur="0.001" fill="hold"
+      targetElement="_x0000_s2051_37_81" attributeName="style.visibility"
+      to="visible"/>
+     <oa:animate id="TimeNode11" dur="1.0" fill="hold"
+      targetElement="_x0000_s2051_37_81" additive="base" attributeName="ppt_x"
+      calcmode="linear" valueType="number" keyTimes="0.0;1.0"
+      values="0-#ppt_w/2;#ppt_x"/>
+     <oa:animate id="TimeNode12" dur="1.0" fill="hold"
+      targetElement="_x0000_s2051_37_81" additive="base" attributeName="ppt_y"
+      calcmode="linear" valueType="number" keyTimes="0.0;1.0"
+      values="#ppt_y;#ppt_y"/>
+    </oa:par>
+   </oa:par>
+   <oa:par id="TimeNode13" begin="2.0" fill="hold">
+    <oa:par id="TimeNode14" o:presetID="ppt_2" o:presetClass="entrance"
+     o:presetSubType="0x8" begin="0.0" fill="hold" p:nodeType="afterEffect">
+     <oa:set id="TimeNode15" begin="0.0" dur="0.001" fill="hold"
+      targetElement="_x0000_s2051_82_174" attributeName="style.visibility"
+      to="visible"/>
+     <oa:animate id="TimeNode16" dur="1.0" fill="hold"
+      targetElement="_x0000_s2051_82_174" additive="base" attributeName="ppt_x"
+      calcmode="linear" valueType="number" keyTimes="0.0;1.0"
+      values="0-#ppt_w/2;#ppt_x"/>
+     <oa:animate id="TimeNode17" dur="1.0" fill="hold"
+      targetElement="_x0000_s2051_82_174" additive="base" attributeName="ppt_y"
+      calcmode="linear" valueType="number" keyTimes="0.0;1.0"
+      values="#ppt_y;#ppt_y"/>
+    </oa:par>
+   </oa:par>
+   <oa:par id="TimeNode18" begin="3.0" fill="hold">
+    <oa:par id="TimeNode19" o:presetID="ppt_2" o:presetClass="entrance"
+     o:presetSubType="0x8" begin="0.0" fill="hold" p:nodeType="afterEffect">
+     <oa:set id="TimeNode20" begin="0.0" dur="0.001" fill="hold"
+      targetElement="_x0000_s2051_175_248" attributeName="style.visibility"
+      to="visible"/>
+     <oa:animate id="TimeNode21" dur="1.0" fill="hold"
+      targetElement="_x0000_s2051_175_248" additive="base" attributeName="ppt_x"
+      calcmode="linear" valueType="number" keyTimes="0.0;1.0"
+      values="0-#ppt_w/2;#ppt_x"/>
+     <oa:animate id="TimeNode22" dur="1.0" fill="hold"
+      targetElement="_x0000_s2051_175_248" additive="base" attributeName="ppt_y"
+      calcmode="linear" valueType="number" keyTimes="0.0;1.0"
+      values="#ppt_y;#ppt_y"/>
+    </oa:par>
+   </oa:par>
+   <oa:par id="TimeNode23" begin="4.0" fill="hold">
+    <oa:par id="TimeNode24" o:presetID="ppt_2" o:presetClass="entrance"
+     o:presetSubType="0x8" begin="0.0" fill="hold" p:nodeType="afterEffect">
+     <oa:set id="TimeNode25" begin="0.0" dur="0.001" fill="hold"
+      targetElement="_x0000_s2051_251_260" attributeName="style.visibility"
+      to="visible"/>
+     <oa:animate id="TimeNode26" dur="1.0" fill="hold"
+      targetElement="_x0000_s2051_251_260" additive="base" attributeName="ppt_x"
+      calcmode="linear" valueType="number" keyTimes="0.0;1.0"
+      values="0-#ppt_w/2;#ppt_x"/>
+     <oa:animate id="TimeNode27" dur="1.0" fill="hold"
+      targetElement="_x0000_s2051_251_260" additive="base" attributeName="ppt_y"
+      calcmode="linear" valueType="number" keyTimes="0.0;1.0"
+      values="#ppt_y;#ppt_y"/>
+    </oa:par>
+   </oa:par>
+  </oa:par>
+ </oa:seq>
+</oa:par>
+</body>
+
+</html>

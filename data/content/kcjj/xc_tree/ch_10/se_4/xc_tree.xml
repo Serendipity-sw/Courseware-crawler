@@ -1,0 +1,13 @@
+﻿<xc_know>
+
+	<xc_know_list>
+
+		<xc_know_column id="xc_know_01" Name="一、国家行为">../content/kcjj/word/10/ch_04/se_01/10-4-1-1.htm</xc_know_column>
+		<xc_know_column id="xc_know_02" Name="二、抽象行政行为">../content/kcjj/word/10/ch_04/se_02/10-4-2-1.htm</xc_know_column>
+                <xc_know_column id="xc_know_03" Name="三、行政机关的内部人事管理行为">../content/kcjj/word/10/ch_04/se_03/10-4-3-1.htm</xc_know_column>
+		<xc_know_column id="xc_know_04" Name="四、终局行政行为">../content/kcjj/word/10/ch_04/se_04/10-4-4-1.htm</xc_know_column>
+                <xc_know_column id="xc_know_05" Name="五、《若干解释》规定的其他不可诉的行为">../content/kcjj/word/10/ch_04/se_05/10-4-5-1.htm</xc_know_column>
+		
+	</xc_know_list>
+
+</xc_know>

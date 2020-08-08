@@ -1,0 +1,9 @@
+﻿<xc_know>
+
+	<xc_know_list>
+		<xc_know_column id="xc_know_01" Name="一、行政法规">../content/kcjj/word/6/ch_01/se_01/6-1-1-1.htm</xc_know_column>
+		<xc_know_column id="xc_know_02" Name="二、规章">../content/kcjj/word/6/ch_01/se_02/6-1-2-1.htm</xc_know_column>
+                <xc_know_column id="xc_know_03" Name="三、其他行政规范性文件">../content/kcjj/word/6/ch_01/se_03/6-1-3-1.htm</xc_know_column>
+        </xc_know_list>
+
+</xc_know>
