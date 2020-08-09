@@ -1,9 +1,12 @@
 package main
 
 import (
+	"bytes"
 	"database/sql"
 	"fmt"
+	"github.com/PuerkitoBio/goquery"
 	"github.com/swgloomy/gutil"
+	"io/ioutil"
 	"os"
 	"path/filepath"
 	"regexp"
@@ -87,46 +90,46 @@ func main() {
 				fmt.Println(err.Error())
 				continue
 			}
-			//subscript := existCode(itemArray[6], &modalArray)
-			//if subscript == -1 {
-			modalArray = append(modalArray, dataStruct{
-				Id:                 index,
-				Courseid:           itemArray[1],
-				Bookcode:           bookcode,
-				Bookname:           itemArray[3],
-				Chaptercode:        itemArray[4],
-				Chaptername:        itemArray[5],
-				Sectioncode:        itemArray[6],
-				Sectionname:        itemArray[7],
-				Articlecode:        itemArray[10],
-				Articletextcontent: strings.Replace(strings.Replace(itemArray[14], "?", "", -1), "　", "", -1),
-				ArticletextHtml:    strings.Replace(strings.Replace(strings.Replace(itemArray[15], "@", "", -1), "　", "", -1), "?", "", -1),
-				Articlestartframe:  articlestartframe,
-			})
-			//subscript := len(modalArray) - 1
-			//}
-			//path := findContent(fmt.Sprintf("%s.files", itemArray[10]), false)
-			//if path == "" {
-			//	fmt.Println(itemArray[10])
-			//	continue
-			//}
-			//htmlByte, err := ioutil.ReadFile(fmt.Sprintf("%s/slide0001.htm", path))
-			//if err != nil {
-			//	fmt.Println(err.Error())
-			//	continue
-			//}
-			//docQuery, err := goquery.NewDocumentFromReader(bytes.NewReader(htmlByte))
-			//if err != nil {
-			//	fmt.Println(err.Error())
-			//	continue
-			//}
-			//modalArray[subscript].Articletextcontent = docQuery.Text()
-			//htmlStr, err := docQuery.Html()
-			//if err != nil {
-			//	fmt.Println(err.Error())
-			//	continue
-			//}
-			//modalArray[subscript].ArticletextHtml = htmlStr
+			subscript := existCode(itemArray[6], &modalArray)
+			if subscript == -1 {
+				modalArray = append(modalArray, dataStruct{
+					Id:                 index,
+					Courseid:           itemArray[1],
+					Bookcode:           bookcode,
+					Bookname:           itemArray[3],
+					Chaptercode:        itemArray[4],
+					Chaptername:        itemArray[5],
+					Sectioncode:        itemArray[6],
+					Sectionname:        itemArray[7],
+					Articlecode:        itemArray[10],
+					Articletextcontent: strings.Replace(strings.Replace(itemArray[14], "?", "", -1), "　", "", -1),
+					ArticletextHtml:    strings.Replace(strings.Replace(strings.Replace(itemArray[15], "@", "", -1), "　", "", -1), "?", "", -1),
+					Articlestartframe:  articlestartframe,
+				})
+				subscript = len(modalArray) - 1
+			}
+			path := findContent(fmt.Sprintf("%s.files", itemArray[10]), false)
+			if path == "" {
+				fmt.Println(itemArray[10])
+				continue
+			}
+			htmlByte, err := ioutil.ReadFile(fmt.Sprintf("%s/slide0001.htm", path))
+			if err != nil {
+				fmt.Println(err.Error())
+				continue
+			}
+			docQuery, err := goquery.NewDocumentFromReader(bytes.NewReader(htmlByte))
+			if err != nil {
+				fmt.Println(err.Error())
+				continue
+			}
+			modalArray[subscript].Articletextcontent = docQuery.Text()
+			htmlStr, err := docQuery.Html()
+			if err != nil {
+				fmt.Println(err.Error())
+				continue
+			}
+			modalArray[subscript].ArticletextHtml = htmlStr
 		}
 	}
 	sqlStr := fmt.Sprintf("insert into %s(courseid,bookcode,bookname,chaptercode,chaptername,sectioncode,sectionname,sectionaudiourl,articlecode,articletextcontent,articletext_html,articlestartframe) values(?,?,?,?,?,?,?,?,?,?,?,?)", tableName)
