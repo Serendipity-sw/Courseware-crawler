@@ -1,12 +1,9 @@
 package main
 
 import (
-	"bytes"
 	"database/sql"
 	"fmt"
-	"github.com/PuerkitoBio/goquery"
 	"github.com/swgloomy/gutil"
-	"io/ioutil"
 	"os"
 	"path/filepath"
 	"regexp"
@@ -30,6 +27,8 @@ type dataStruct struct {
 	Articletextcontent string `json:"articletextcontent"`
 	ArticletextHtml    string `json:"articletext_html"`
 	Articlestartframe  int    `json:"articlestartframe"`
+	Video              string `json:"video"`
+	ImgPath            string `json:"img_path"`
 }
 
 var (
@@ -38,7 +37,7 @@ var (
 		DbHost: "cdb-0ihp1dux.gz.tencentcdb.com",
 		DbPort: 10028,
 		DbPass: "tagger_mysql_2020",
-		DbName: "taggeropen",
+		DbName: "courseware",
 	}
 )
 
@@ -59,6 +58,8 @@ func main() {
 		"articletextcontent nvarchar(5000) default '' not null",
 		"articletext_html nvarchar(5000) default '' not null",
 		"articlestartframe int not null",
+		"video nvarchar(2000) default '' not null",
+		"img_path nvarchar(2000) default '' not null",
 	}
 
 	var dbs *sql.DB
@@ -90,51 +91,55 @@ func main() {
 				fmt.Println(err.Error())
 				continue
 			}
-			subscript := existCode(itemArray[6], &modalArray)
-			if subscript == -1 {
-				modalArray = append(modalArray, dataStruct{
-					Id:                 index,
-					Courseid:           itemArray[1],
-					Bookcode:           bookcode,
-					Bookname:           itemArray[3],
-					Chaptercode:        itemArray[4],
-					Chaptername:        itemArray[5],
-					Sectioncode:        itemArray[6],
-					Sectionname:        itemArray[7],
-					Articlecode:        itemArray[10],
-					Articletextcontent: strings.Replace(strings.Replace(itemArray[14], "?", "", -1), "　", "", -1),
-					ArticletextHtml:    strings.Replace(strings.Replace(strings.Replace(itemArray[15], "@", "", -1), "　", "", -1), "?", "", -1),
-					Articlestartframe:  articlestartframe,
-				})
-				subscript = len(modalArray) - 1
-			}
-			path := findContent(fmt.Sprintf("%s.files", itemArray[10]), false)
-			if path == "" {
-				fmt.Println(itemArray[10])
-				continue
-			}
-			htmlByte, err := ioutil.ReadFile(fmt.Sprintf("%s/slide0001.htm", path))
-			if err != nil {
-				fmt.Println(err.Error())
-				continue
-			}
-			docQuery, err := goquery.NewDocumentFromReader(bytes.NewReader(htmlByte))
-			if err != nil {
-				fmt.Println(err.Error())
-				continue
-			}
-			modalArray[subscript].Articletextcontent = docQuery.Text()
-			htmlStr, err := docQuery.Html()
-			if err != nil {
-				fmt.Println(err.Error())
-				continue
-			}
-			modalArray[subscript].ArticletextHtml = htmlStr
+			//subscript := existCode(itemArray[6], &modalArray)
+			//if subscript == -1 {
+			splitArray := strings.Split(itemArray[6], "-")
+			numberTwo := gutil.If(len(splitArray[1]) == 1, fmt.Sprintf("0%s", splitArray[1]), splitArray[1]).(string)
+			modalArray = append(modalArray, dataStruct{
+				Id:                 index,
+				Courseid:           itemArray[1],
+				Bookcode:           bookcode,
+				Bookname:           itemArray[3],
+				Chaptercode:        itemArray[4],
+				Chaptername:        itemArray[5],
+				Sectioncode:        itemArray[6],
+				Sectionname:        itemArray[7],
+				Articlecode:        itemArray[10],
+				Articletextcontent: strings.Replace(strings.Replace(itemArray[14], "?", "", -1), "　", "", -1),
+				ArticletextHtml:    strings.Replace(strings.Replace(strings.Replace(itemArray[15], "@", "", -1), "　", "", -1), "?", "", -1),
+				Articlestartframe:  articlestartframe,
+				Video:              fmt.Sprintf("./content/kcjj/video/%s/ch_%s/se_%s/cpt_media/xzss%s.asx", splitArray[0], numberTwo, numberTwo, itemArray[6]),
+				ImgPath:            fmt.Sprintf("./content/kcjj/video/%s/ch_%s/se_%s/%s.files/slide0001_background.jpg", splitArray[0], numberTwo, numberTwo, itemArray[10]),
+			})
+			//	subscript = len(modalArray) - 1
+			//}
+			//path := findContent(fmt.Sprintf("%s.files", itemArray[10]), false)
+			//if path == "" {
+			//	fmt.Println(itemArray[10])
+			//	continue
+			//}
+			//htmlByte, err := ioutil.ReadFile(fmt.Sprintf("%s/slide0001.htm", path))
+			//if err != nil {
+			//	fmt.Println(err.Error())
+			//	continue
+			//}
+			//docQuery, err := goquery.NewDocumentFromReader(bytes.NewReader(htmlByte))
+			//if err != nil {
+			//	fmt.Println(err.Error())
+			//	continue
+			//}
+			//modalArray[subscript].Articletextcontent = docQuery.Text()
+			//htmlStr, err := docQuery.Html()
+			//if err != nil {
+			//	fmt.Println(err.Error())
+			//	continue
+			//}
+			//modalArray[subscript].ArticletextHtml = htmlStr
 		}
 	}
-	sqlStr := fmt.Sprintf("insert into %s(courseid,bookcode,bookname,chaptercode,chaptername,sectioncode,sectionname,sectionaudiourl,articlecode,articletextcontent,articletext_html,articlestartframe) values(?,?,?,?,?,?,?,?,?,?,?,?)", tableName)
+	sqlStr := fmt.Sprintf("insert into %s(courseid,bookcode,bookname,chaptercode,chaptername,sectioncode,sectionname,sectionaudiourl,articlecode,articletextcontent,articletext_html,articlestartframe,video,img_path) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?)", tableName)
 	for _, item := range modalArray {
-		sqlResult, err := gutil.MySqlSqlExec(dbs, mysqlDb, sqlStr, item.Courseid, item.Bookcode, item.Bookname, item.Chaptercode, item.Chaptername, item.Sectioncode, item.Sectionname, item.Sectionaudiourl, item.Articlecode, item.Articletextcontent, item.ArticletextHtml, item.Articlestartframe)
+		sqlResult, err := gutil.MySqlSqlExec(dbs, mysqlDb, sqlStr, item.Courseid, item.Bookcode, item.Bookname, item.Chaptercode, item.Chaptername, item.Sectioncode, item.Sectionname, item.Sectionaudiourl, item.Articlecode, item.Articletextcontent, item.ArticletextHtml, item.Articlestartframe, item.Video, item.ImgPath)
 		if err != nil {
 			fmt.Println(sqlStr)
 			fmt.Println(item.Articletextcontent)
