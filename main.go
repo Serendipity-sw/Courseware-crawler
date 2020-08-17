@@ -33,9 +33,9 @@ type dataStruct struct {
 
 var (
 	mysqlDb = gutil.MySqlDBStruct{
-		DbUser: "root",
-		DbHost: "cdb-0ihp1dux.gz.tencentcdb.com",
-		DbPort: 10028,
+		DbUser: "tagger",
+		DbHost: "gz-cynosdbmysql-grp-6ptj8exh.sql.tencentcdb.com",
+		DbPort: 20175,
 		DbPass: "tagger_mysql_2020",
 		DbName: "courseware",
 	}
