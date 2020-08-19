@@ -53,13 +53,13 @@ func main() {
 	var threadLock sync.WaitGroup
 	for index, fileName := range *fileNameArrayIn {
 		threadLock.Add(1)
-		go excelProcess(fmt.Sprintf("%s/%s", dirPath, fileName), fmt.Sprintf("data%d", index), &threadLock)
+		go excelProcess(fmt.Sprintf("%s/%s", dirPath, fileName), index, fmt.Sprintf("data%d", index), &threadLock)
 	}
 	threadLock.Wait()
 	fmt.Println("run success!")
 }
 
-func excelProcess(excelPath string, fileNam string, threadLock *sync.WaitGroup) {
+func excelProcess(excelPath string, id int, fileNam string, threadLock *sync.WaitGroup) {
 	defer threadLock.Done()
 	excelArrayIn, err := gutil.ReadExcel(excelPath)
 	if err != nil {
@@ -83,7 +83,7 @@ func excelProcess(excelPath string, fileNam string, threadLock *sync.WaitGroup) 
 						ChapterName:     itemArray[3],
 						CourseId:        1,
 						StatusId:        1,
-						Id:              1,
+						Id:              id,
 					})
 					index = len(dataList) - 1
 				}
@@ -92,7 +92,7 @@ func excelProcess(excelPath string, fileNam string, threadLock *sync.WaitGroup) 
 					dataList[index].PeriodList = append(dataList[index].PeriodList, periodListStruct{
 						Id:             1,
 						StatusId:       1,
-						CourseId:       1,
+						CourseId:       id,
 						ChapterId:      2,
 						PeriodName:     itemArray[5],
 						PeriodDesc:     strings.Replace(strings.Replace(itemArray[14], "?", "", -1), "　", "", -1),
